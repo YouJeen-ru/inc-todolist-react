@@ -105,6 +105,24 @@ function App() {
         })
 
     }
+    
+    function changeTaskTitle(id: string, title: string, todolistId: string) {
+        const todoListTasks = tasks[todolistId]
+        const task = todoListTasks.find(task => task.id === id)
+        if (task) {
+            task.title = title
+            setTasks({...tasks})
+        }
+    }
+    
+    function changeTodoListTitle(todolistId: string, title: string) {
+        const todoList = todolists.find(tl => tl.id === todolistId)
+        if (todoList) {
+            todoList.title = title
+            setTodolists([...todolists])
+        }
+        
+    }
 
     return (
         <div className="App">
@@ -132,6 +150,8 @@ function App() {
                         changeTaskStatus={changeStatus}
                         filter={tl.filter}
                         removeTodolist={removeTodolist}
+                        changeTaskTitle={changeTaskTitle}
+                        changeTodoListTitle={changeTodoListTitle}
                     />
                 })
             }
