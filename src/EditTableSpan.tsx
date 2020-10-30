@@ -4,6 +4,7 @@ import {TextField} from "@material-ui/core";
 type EditTableSpanPropsType = {
     value: string
     changeValue: (value: string) => void
+    isDone?: boolean
 }
 
 function EditTableSpan(props: EditTableSpanPropsType) {
@@ -39,7 +40,7 @@ function EditTableSpan(props: EditTableSpanPropsType) {
             //     autoFocus={true}
             //     onChange={onChangeHandler}
             // />
-            : <span onDoubleClick={activatedEditMode}>{props.value}</span>
+            : <span className={props.isDone ? "is-done": ''} onDoubleClick={activatedEditMode}>{props.value}</span>
     );
 };
 
