@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {Button} from "@material-ui/core";
 
 
 type AddItemFormPropsType = {
@@ -41,7 +42,8 @@ function AddItemForm(props: AddItemFormPropsType) {
                    onKeyPress={onKeyPressHandler}
                    className={error ? "error" : ""}
             />
-            <button onClick={onAddTaskClick}>+</button>
+            {/*<button onClick={onAddTaskClick}>+</button>*/}
+            <Button onClick={onAddTaskClick} variant="contained" color="primary" >+</Button>
             {error && <div className="error-message">{error}</div>}
         </div>
     );
