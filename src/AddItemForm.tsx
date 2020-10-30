@@ -43,7 +43,7 @@ function AddItemForm(props: AddItemFormPropsType) {
                    className={error ? "error" : ""}
             />
             {/*<button onClick={onAddTaskClick}>+</button>*/}
-            <Button onClick={onAddTaskClick} variant="contained" color="primary" >+</Button>
+            <Button onClick={onAddTaskClick} variant="contained" color="primary" size={"small"} >+</Button>
             {error && <div className="error-message">{error}</div>}
         </div>
     );
