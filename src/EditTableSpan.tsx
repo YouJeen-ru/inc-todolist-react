@@ -26,6 +26,7 @@ function EditTableSpan(props: EditTableSpanPropsType) {
     return (
         editMode
             ? <TextField
+                size={"small"}
                 variant={"outlined"}
                 value={title}
                 onBlur={deActivatedEditMode}

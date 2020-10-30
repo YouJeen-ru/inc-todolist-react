@@ -44,6 +44,7 @@ function AddItemForm(props: AddItemFormPropsType) {
             {/*       className={error ? "error" : ""}*/}
             {/*/>*/}
             <TextField
+                size={"small"}
                 variant={"outlined"}
                 value={title}
                 onChange={onChangeHandler}
