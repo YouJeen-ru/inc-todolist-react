@@ -7,20 +7,30 @@ import {
 } from './todolist-reducer';
 import {v1} from 'uuid';
 import {FilterValuesType, TodolistType} from '../App';
+import { tasksReducer} from "./tasks-reducer";
 
 test('correct todolist should be removed', () => {
     let todolistId1 = v1();
     let todolistId2 = v1();
 
+
     const startState: Array<TodolistType> = [
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
+    const startStateTasks = {
+    [todolistId1]: [],
+    [todolistId2]: []
+    }
 
-    const endState = todolistReducer(startState, RemoveTodoListAC(todolistId1))
+    const action = RemoveTodoListAC(todolistId1)
+    const endStateTodolists = todolistReducer(startState, action)
+    const endStateTasks = tasksReducer(startStateTasks, action)
+    const tasksId = Object.keys(endStateTasks)
 
-    expect(endState.length).toBe(1);
-    expect(endState[0].id).toBe(todolistId2);
+    expect(endStateTodolists.length).toBe(1);
+    expect(endStateTodolists[0].id).toBe(todolistId2);
+    expect(tasksId.length).toBe(1);
 });
 
 test('correct todolist should be added', () => {
@@ -29,15 +39,26 @@ test('correct todolist should be added', () => {
 
     let newTodolistTitle = "New Todolist";
 
-    const startState: Array<TodolistType> = [
+    const startStateTodoList: Array<TodolistType> = [
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
 
-    const endState = todolistReducer(startState, AddTodoListAC(newTodolistTitle))
+    const startStateTasks = {
+        [todolistId1]: [],
+        [todolistId2]: []
+    }
+    const action = AddTodoListAC(newTodolistTitle)
 
-    expect(endState.length).toBe(3);
-    expect(endState[2].title).toBe(newTodolistTitle);
+    const endStateTodoList = todolistReducer(startStateTodoList, action)
+    const endStateTasks = tasksReducer(startStateTasks, action)
+
+    const todolistId =  endStateTodoList[2].id
+    const tasksId = Object.keys(endStateTasks)
+
+    expect(endStateTodoList.length).toBe(3);
+    expect(endStateTodoList[2].title).toBe(newTodolistTitle);
+    expect(todolistId).toBe(tasksId[2])
 });
 
 test('correct todolist should change its name', () => {
