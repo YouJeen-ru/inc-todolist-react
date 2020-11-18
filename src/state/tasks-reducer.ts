@@ -47,7 +47,7 @@ export const tasksReducer = (state: TasksStateType, action: ActionType) => {
             let copyState = state
             let todolistTasks = copyState[action.todolistID];
             copyState[action.todolistID] = todolistTasks.filter(t => t.id != action.taskId);
-            return copyState
+            return {...copyState}
         }
 
         case 'ADD-TASK': {
