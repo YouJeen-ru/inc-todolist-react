@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useCallback, useState} from 'react';
 import {TextField} from "@material-ui/core";
 
 type EditTableSpanPropsType = {
@@ -7,7 +7,8 @@ type EditTableSpanPropsType = {
     isDone?: boolean
 }
 
-function EditTableSpan(props: EditTableSpanPropsType) {
+const EditTableSpan = React.memo((props: EditTableSpanPropsType) => {
+    console.log('EditTableSpan')
     let [editMode, setEditMode] = useState<boolean>(false)
     let [title, setTitle] = useState<string>(props.value)
 
@@ -42,6 +43,6 @@ function EditTableSpan(props: EditTableSpanPropsType) {
             // />
             : <span className={props.isDone ? "is-done": ''} onDoubleClick={activatedEditMode}>{props.value}</span>
     );
-};
+});
 
 export default EditTableSpan;
