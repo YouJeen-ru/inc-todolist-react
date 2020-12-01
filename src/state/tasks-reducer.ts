@@ -86,8 +86,7 @@ export const tasksReducer = (state = initialState, action: ActionType) => {
             //             return {...t, isDone: action.isDone}
             //         }
             //     })
-            return {
-                ...state, [action.todolistID]: state[action.todolistID]
+            return ({...state, [action.todolistID]: state[action.todolistID]
                     .map(t => {
                         if (t.id !== action.taskId) {
                             return t
@@ -95,7 +94,7 @@ export const tasksReducer = (state = initialState, action: ActionType) => {
                             return {...t, isDone: action.isDone}
                         }
                     })
-            }
+            })
         }
 
         case "CHANGE-TASK-TITLE":

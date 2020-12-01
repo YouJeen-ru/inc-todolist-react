@@ -28,8 +28,12 @@ const  AddItemForm = React.memo((props: AddItemFormPropsType) => {
         }
     }
 
+
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if(!error) {
+            setError(null);
+        }
+
         if (e.charCode === 13) {
             onAddTaskClick();
         }

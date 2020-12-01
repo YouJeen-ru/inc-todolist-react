@@ -31,13 +31,11 @@ export const  Todolist = React.memo((props: PropsType) => {
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
 
-    }, [props.id, props.addTask])
+    }, [props.id, props.id, props])
 
     const changeTodoListTitle = useCallback((title: string) => {
         props.changeTodoListTitle(props.id, title)
     }, [props.id, props.changeTodoListTitle])
-
-
 
     const removeTodolist = useCallback(() => props.removeTodolist(props.id), [props.id, props.removeTodolist])
 
@@ -68,14 +66,14 @@ export const  Todolist = React.memo((props: PropsType) => {
         <ul style={{listStyle: 'none', paddingLeft: '0'}}>
             {
                 tasksForTodolist.map(t => {
-                    const onClickHandler = useCallback((taskId: string) => props.removeTask(taskId, props.id), [])
+                    const onClickHandler = (taskId: string) => props.removeTask(taskId, props.id)
 
-                    const onChangeHandler = useCallback((taskId: string, newIsDoneValue: boolean) => {
+                    const onChangeHandler = (taskId: string, newIsDoneValue: boolean) => {
                         props.changeTaskStatus(taskId, newIsDoneValue, props.id);
-                    }, [])
-                    const changeTaskTitle = useCallback((taskId: string, value: string) => {
+                    }
+                    const changeTaskTitle =(taskId: string, value: string) => {
                         props.changeTaskTitle(taskId, value, props.id)
-                    }, [])
+                    }
 
                     return <Task
                         key={t.id}
