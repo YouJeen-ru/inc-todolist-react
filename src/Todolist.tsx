@@ -52,6 +52,14 @@ export const  Todolist = React.memo((props: PropsType) => {
     if (props.filter === "completed") {
         tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
     }
+    const onClickHandler = useCallback((taskId: string) => props.removeTask(taskId, props.id),[])
+
+    const onChangeHandler = useCallback((taskId: string, newIsDoneValue: boolean) => {
+        props.changeTaskStatus(taskId, newIsDoneValue, props.id);
+    },[])
+    const changeTaskTitle = useCallback((taskId: string, value: string) => {
+        props.changeTaskTitle(taskId, value, props.id)
+    },[])
 
     return <div>
         <h3>
@@ -66,14 +74,6 @@ export const  Todolist = React.memo((props: PropsType) => {
         <ul style={{listStyle: 'none', paddingLeft: '0'}}>
             {
                 tasksForTodolist.map(t => {
-                    const onClickHandler = (taskId: string) => props.removeTask(taskId, props.id)
-
-                    const onChangeHandler = (taskId: string, newIsDoneValue: boolean) => {
-                        props.changeTaskStatus(taskId, newIsDoneValue, props.id);
-                    }
-                    const changeTaskTitle =(taskId: string, value: string) => {
-                        props.changeTaskTitle(taskId, value, props.id)
-                    }
 
                     return <Task
                         key={t.id}
