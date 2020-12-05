@@ -1,23 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+
+import {todolistApi} from "../api/todolist-api";
 export default {
     title: 'API'
 }
 
-const settings = {
-    withCredentials: true,
-    headers: {
-        'API-KEY': '5e5dd360-92d1-4f44-8e94-33caa0f21526'
-    }
-}
 
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', settings).then( (res) => {
+        todolistApi.getTodo().then((res) => {
             setState(res.data);
         } )
-
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
@@ -25,8 +19,8 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        let promise = axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title:'React'}, settings)
-        promise.then((res) => {
+        const title = "Redux"
+        todolistApi.createTodo(title).then((res) => {
             setState(res.data.data.item)
         })
     }, [])
@@ -36,11 +30,9 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = '6acc8a77-c518-44c1-b81b-2bb450c7c8dd'
-        let promise = axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, settings)
-        promise.then((res) => {
+        const todolistId = '32e57b75-cbc6-483e-bcb5-83a04014845d'
+       todolistApi.deleteTodo(todolistId).then((res) => {
             setState(res.data)
-
         })
     }, [])
 
@@ -49,10 +41,9 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = 'dd96317c-dbdd-4d47-8c7f-9a799f1af981'
-        const title = 'Redux'
-        let promise = axios.put(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, {title}, settings)
-        promise.then((res) => {
+        const todolistId = '33574dea-4102-400a-b01a-06513655f8dd'
+        const title = 'CSS'
+        todolistApi.updateTodo(todolistId, title).then((res) => {
             setState(res.data)
         })
     }, [])
