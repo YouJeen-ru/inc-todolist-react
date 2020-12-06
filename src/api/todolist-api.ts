@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 type TodoType = {
     id: string
     title: string
@@ -7,11 +8,39 @@ type TodoType = {
     order: number
 }
 //Generic
- type CommonResponseType<T = {}> = {
-     resultCode: number
-     messages: Array<string>
-     data: T
- }
+type CommonResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    data: D
+}
+
+export type TaskType = {
+    description: string
+    title: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
+
+type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+}
+
+type GetTasksResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
+}
 
 
 
@@ -29,7 +58,7 @@ export const todolistApi = {
 
     },
     createTodo(title: string) {
-        return instanse.post<CommonResponseType<{item: TodoType}>>('todo-lists', {title})
+        return instanse.post<CommonResponseType<{ item: TodoType }>>('todo-lists', {title})
 
     },
     deleteTodo(todolistId: string) {
@@ -37,5 +66,17 @@ export const todolistApi = {
     },
     updateTodo(todolistId: string, title: string) {
         return instanse.put<CommonResponseType>(`todo-lists/${todolistId}`, {title})
+    },
+    getTasks(todolistId: string) {
+        return instanse.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
+    },
+    createTask(todolistId: string, taskTitle: string) {
+        return instanse.post<CommonResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
+    },
+    deleteTask(todolistId: string, taskId: string) {
+        return instanse.delete<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+        return instanse.put<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
     }
 }
