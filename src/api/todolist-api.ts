@@ -1,24 +1,37 @@
 import axios from "axios";
 
 
-type TodoType = {
+export type TodolistType = {
     id: string
     title: string
     addedDate: string
     order: number
 }
 //Generic
-type CommonResponseType<D = {}> = {
+export type CommonResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
     data: D
+}
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 4
 }
 
 export type TaskType = {
     description: string
     title: string
-    status: number
-    priority: number
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
     id: string
@@ -27,7 +40,7 @@ export type TaskType = {
     addedDate: string
 }
 
-type UpdateTaskModelType = {
+export type UpdateTaskModelType = {
     title: string
     description: string
     status: number
@@ -36,7 +49,7 @@ type UpdateTaskModelType = {
     deadline: string
 }
 
-type GetTasksResponse = {
+export type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
@@ -54,11 +67,11 @@ const instanse = axios.create({
 
 export const todolistApi = {
     getTodo() {
-        return instanse.get<Array<TodoType>>('todo-lists')
+        return instanse.get<Array<TodolistType>>('todo-lists')
 
     },
     createTodo(title: string) {
-        return instanse.post<CommonResponseType<{ item: TodoType }>>('todo-lists', {title})
+        return instanse.post<CommonResponseType<{ item: TodolistType }>>('todo-lists', {title})
 
     },
     deleteTodo(todolistId: string) {

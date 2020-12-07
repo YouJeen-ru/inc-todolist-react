@@ -1,10 +1,11 @@
-import React, {ChangeEvent, useCallback, useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {TextField} from "@material-ui/core";
+import {TaskStatuses} from "./api/todolist-api";
 
 type EditTableSpanPropsType = {
     value: string
     changeValue: (value: string) => void
-    isDone?: boolean
+    status?: TaskStatuses
 }
 
 const EditTableSpan = React.memo((props: EditTableSpanPropsType) => {
@@ -41,7 +42,7 @@ const EditTableSpan = React.memo((props: EditTableSpanPropsType) => {
             //     autoFocus={true}
             //     onChange={onChangeHandler}
             // />
-            : <span className={props.isDone ? "is-done": ''} onDoubleClick={activatedEditMode}>{props.value}</span>
+            : <span className={props.status === TaskStatuses.Completed ? "is-done": ''} onDoubleClick={activatedEditMode}>{props.value}</span>
     );
 });
 
