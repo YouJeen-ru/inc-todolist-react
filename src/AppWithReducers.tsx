@@ -58,7 +58,10 @@ function AppWithReducers() {
     }
 
     function addTask(title: string, todolistId: string) {
-        dispatchTasks(addTaskAC(title, todolistId))
+        dispatchTasks(addTaskAC(
+        {id: v1(), title: "HTML&CSS",  status: TaskStatuses.Completed, todoListId: todolistId1,
+            startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low, description:''}
+        ))
     }
 
     function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
