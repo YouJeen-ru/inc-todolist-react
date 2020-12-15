@@ -13,8 +13,7 @@ export type RemoveTodoListActionType = {
 
 export type AddTodoListActionType = {
     type: 'ADD-TODOLIST'
-    title: string
-    todolistId: string
+    todolist: TodolistType
 }
 
 type ChangeTitleActionType = {
@@ -46,13 +45,8 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
         case 'REMOVE-TODOLIST':
             return state.filter(tl => tl.id !== action.id);
         case 'ADD-TODOLIST':
-            return [{
-                id: action.todolistId,
-                title: action.title,
-                filter: "all",
-                addedDate: '',
-                order: 0
-            }, ...state]
+            const newTodolist: TodolistDomainType = {...action.todolist, filter: "all"}
+            return [newTodolist, ...state]
         case 'CHANGE-TODOLIST-TITLE':
             const todoList = state.find(tl => tl.id === action.id)
             if (todoList) {
@@ -79,8 +73,8 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
 export const RemoveTodoListAC = (todolistID: string): RemoveTodoListActionType => {
     return {type: 'REMOVE-TODOLIST', id: todolistID }
 }
-export const AddTodoListAC = (title: string): AddTodoListActionType => {
-    return {type: 'ADD-TODOLIST', title: title, todolistId: v1() }
+export const AddTodoListAC = (todolist: TodolistType): AddTodoListActionType => {
+    return {type: 'ADD-TODOLIST', todolist}
 }
 export const ChangeTodoListTitleAC = (todolistID: string, title: string): ChangeTitleActionType => {
     return {type: 'CHANGE-TODOLIST-TITLE', id: todolistID, title: title }
@@ -109,6 +103,16 @@ export const removeTodolistTC = (todolistId: string) => {
         todolistApi.deleteTodo(todolistId)
             .then((res) => {
                 dispatch(RemoveTodoListAC(todolistId))
+            })
+    }
+
+}
+
+export const addTodolistTC = (title: string) => {
+    return (dispatch: Dispatch) => {
+        todolistApi.createTodo(title)
+            .then((res) => {
+                dispatch(AddTodoListAC(res.data.data.item))
             })
     }
 
