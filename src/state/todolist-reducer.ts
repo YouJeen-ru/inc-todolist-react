@@ -104,3 +104,13 @@ export const fetchTodolistThunk = (dispatch: Dispatch, getState: () => AppRootSt
         })
 }
 
+export const removeTodolistTC = (todolistId: string) => {
+    return (dispatch: Dispatch) => {
+        todolistApi.deleteTodo(todolistId)
+            .then((res) => {
+                dispatch(RemoveTodoListAC(todolistId))
+            })
+    }
+
+}
+

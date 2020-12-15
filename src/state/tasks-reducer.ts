@@ -184,8 +184,6 @@ export const removeTaskTC = (todolistId: string, id: string) => (dispatch: Dispa
 export const addTaskTC = (todolistId: string, taskTitle: string) => (dispatch: Dispatch) => {
     todolistApi.createTask(todolistId, taskTitle)
         .then((res) => {
-            debugger
-            // @ts-ignore
             let task = res.data.data.item
             dispatch(addTaskAC(task))
         })

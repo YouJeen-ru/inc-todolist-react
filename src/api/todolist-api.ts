@@ -84,7 +84,7 @@ export const todolistApi = {
         return instanse.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, taskTitle: string) {
-        return instanse.post<CommonResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
+        return instanse.post<CommonResponseType<{ item: TaskType}>>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
     },
     deleteTask(todolistId: string, taskId: string) {
         return instanse.delete<CommonResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
