@@ -13,7 +13,7 @@ import {
     AddTodoListAC,
     FilterValuesType
 } from "./state/todolist-reducer";
-import {addTaskAC, removeTaskAC, tasksReducer, changeTaskStatusAC, changeTaskTitleAC} from './state/tasks-reducer';
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC,} from './state/tasks-reducer';
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
 
 
@@ -65,11 +65,11 @@ function AppWithReducers() {
     }
 
     function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
-        dispatchTasks(changeTaskStatusAC(id, status, todolistId))
+        dispatchTasks(updateTaskAC(id, {status}, todolistId))
         }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        dispatchTasks(changeTaskTitleAC(id, newTitle, todolistId))
+        dispatchTasks(updateTaskAC(id, {title: newTitle}, todolistId))
 
     }
 
