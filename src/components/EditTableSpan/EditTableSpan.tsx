@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import {TextField} from "@material-ui/core";
-import {TaskStatuses} from "./api/todolist-api";
+import {TaskStatuses} from "../../api/todolist-api";
 
 type EditTableSpanPropsType = {
     value: string
