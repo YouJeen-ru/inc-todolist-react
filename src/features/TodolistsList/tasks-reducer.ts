@@ -4,6 +4,7 @@ import {Dispatch} from "redux";
 import {AppRootStateType} from "../../app/store";
 import {TasksStateType} from "../../app/App";
 import {setAppErrorAC, setAppErrorActionType, setAppStatusAC, setAppStatusActionType} from "../../app/app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 
 
@@ -99,21 +100,15 @@ export const addTaskTC = (todolistId: string, taskTitle: string) => (dispatch: D
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(addTaskAC(res.data.data.item))
-            } else if (res.data.messages.length) {
-                const error = res.data.messages[0]
-                dispatch(setAppErrorAC(error))
-            }
-            else {
-                dispatch(setAppErrorAC("Some Error"))
-            }
+                dispatch(setAppStatusAC('succeeded'))
 
-            dispatch(setAppStatusAC('succeeded'))
+            } else  {
+                handleServerAppError(res.data, dispatch)
+            }
 
         })
         .catch( (error) => {
-            const message = error.message
-            dispatch(setAppErrorAC(message))
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError(error.message, dispatch)
         })
 }
 

@@ -9,6 +9,7 @@ import {
     setAppStatusActionType
 } from "../../app/app-reducer";
 import {addTaskAC} from "./tasks-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 
 let initialState: Array<TodolistDomainType> = []
@@ -85,15 +86,14 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionType>)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(AddTodoListAC(res.data.data.item))
-            } else if (res.data.messages.length) {
-                const error = res.data.messages[0]
-                dispatch(setAppErrorAC(error))
-            } else {
-                dispatch(setAppErrorAC("Some Error"))
+                dispatch(setAppStatusAC('succeeded'))
+            } else  {
+                handleServerAppError(res.data, dispatch)
             }
 
-            dispatch(setAppStatusAC('succeeded'))
-
+        })
+        .catch( (error) => {
+            handleServerNetworkError(error.message, dispatch)
         })
 }
 
