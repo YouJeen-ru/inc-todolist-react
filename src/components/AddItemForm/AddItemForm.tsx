@@ -1,10 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Button, IconButton, TextField} from "@material-ui/core";
 import {AddBox, TextFields} from "@material-ui/icons";
+import {RequestStatusType} from "../../app/app-reducer";
 
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    entityStatus: RequestStatusType
 }
 
 
@@ -41,11 +43,7 @@ const  AddItemForm = React.memo((props: AddItemFormPropsType) => {
     return (
 
         <div>
-            {/*<input value={title}*/}
-            {/*       onChange={onChangeHandler}*/}
-            {/*       onKeyPress={onKeyPressHandler}*/}
-            {/*       className={error ? "error" : ""}*/}
-            {/*/>*/}
+
 
             <TextField
 
@@ -57,14 +55,12 @@ const  AddItemForm = React.memo((props: AddItemFormPropsType) => {
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
                 error={!!error}
+                disabled={props.entityStatus === 'loading'}
 
             />
-            {/*<button onClick={onAddTaskClick}>+</button>*/}
-            {/*<Button onClick={onAddTaskClick} variant="contained" color="primary" size={"small"} >+</Button>*/}
-            <IconButton onClick={onAddTaskClick} color="primary">
+            <IconButton onClick={onAddTaskClick} color="primary" disabled={props.entityStatus === 'loading'}>
                 <AddBox/>
             </IconButton>
-            {/*{error && <div className="error-message">{error}</div>}*/}
         </div>
     );
 });

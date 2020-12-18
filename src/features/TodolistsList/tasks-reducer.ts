@@ -110,6 +110,11 @@ export const addTaskTC = (todolistId: string, taskTitle: string) => (dispatch: D
             dispatch(setAppStatusAC('succeeded'))
 
         })
+        .catch( (error) => {
+            const message = error.message
+            dispatch(setAppErrorAC(message))
+            dispatch(setAppStatusAC('failed'))
+        })
 }
 
 export const updateTaskTC = (taskId: string, todolistId: string, domainModel: UpdateDomainTaskModelType) => {
