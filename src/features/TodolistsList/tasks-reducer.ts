@@ -141,6 +141,9 @@ export const updateTaskTC = (taskId: string, todolistId: string, domainModel: Up
 
 
             })
+                .catch( (error) => {
+                    handleServerNetworkError(error.message, dispatch)
+                })
         }
     }
 }
