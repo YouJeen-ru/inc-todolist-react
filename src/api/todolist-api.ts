@@ -1,5 +1,18 @@
 import axios from "axios";
 
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+
+export type AuthMeType = {
+    id: number
+    email: string
+    login: string
+}
+
 const instanse = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
@@ -7,6 +20,20 @@ const instanse = axios.create({
         'API-KEY': '5e5dd360-92d1-4f44-8e94-33caa0f21526'
     }
 })
+
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instanse.post<CommonResponseType<{userId: number}>>('/auth/login', data)
+    },
+    me() {
+        return instanse.get<CommonResponseType<AuthMeType>>('/auth/me')
+    },
+    logout() {
+        return instanse.delete<CommonResponseType>('/auth/login')
+    },
+}
+
+
 // api
 export const todolistApi = {
     getTodo() {
@@ -87,5 +114,6 @@ export type GetTasksResponse = {
 export type CommonResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
+    fieldsErrors: Array<string>
     data: D
 }
